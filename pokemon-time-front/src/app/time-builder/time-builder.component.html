@@ -1,0 +1,10 @@
+<div *ngFor="let time of teams">
+  <h2>{{ time.owner }}</h2>
+  <ul>
+    <li *ngFor="let pokemon of time.pokemons">
+      {{ pokemon.name }} - ID: {{ pokemon.id }}, Altura: {{ pokemon.height }}, Peso: {{ pokemon.weight }}
+
+    </li>
+  </ul>
+
+</div>
