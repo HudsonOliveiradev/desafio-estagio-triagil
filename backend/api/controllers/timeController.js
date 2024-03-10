@@ -21,7 +21,7 @@ exports.criarTime = async (req, res) => {
 
         const pokemons = pokemonDados.map( pokemon =>({
 
-            id:pokemon.id,
+            id: pokemon.id,
             name: pokemon.name,
             weight: pokemon.weight,
             height: pokemon.height,
