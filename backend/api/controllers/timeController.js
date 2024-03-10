@@ -27,7 +27,7 @@ exports.criarTime = async (req, res) => {
             height: pokemon.height,
         }));
 
-        let novoteam = await Time.criarTime({
+        let novoteam = await Time.create({
                 owner: user,
                 pokemons: pokemons,
         });
@@ -42,8 +42,16 @@ exports.criarTime = async (req, res) => {
 };
 exports.getListarTimes = async (req , res) => {
     try{
-        let times = await Time.findAll();
-        res.status(200).json(times);
+        const times = await Time.findAll();
+
+        const teamsObject = times.reduce((acc, team) => {
+            acc["ID:"+ team.id] = {
+                owner: team.owner,
+                pokemons: team.pokemons
+            };
+            return acc;
+        }, {});
+        res.status(200).json(teamsObject);
 
     } catch (error) {
         res.status(500).json({
