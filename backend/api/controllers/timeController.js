@@ -43,15 +43,7 @@ exports.criarTime = async (req, res) => {
 exports.getListarTimes = async (req , res) => {
     try{
         const times = await Time.findAll();
-
-        const teamsObject = times.reduce((acc, team) => {
-            acc["ID:"+ team.id] = {
-                owner: team.owner,
-                pokemons: team.pokemons
-            };
-            return acc;
-        }, {});
-        res.status(200).json(teamsObject);
+        res.status(200).json(times);
 
     } catch (error) {
         res.status(500).json({

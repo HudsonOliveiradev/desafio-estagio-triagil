@@ -1,12 +1,63 @@
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
+<body>
 <h2>Time Pokemon!</h2>
+
+<button (click)="getTimes()">Buscar Times</button>
+
+<div>
+  <h2>Buscar Time por Owner</h2>
+  <input type="text" [(ngModel)]="buscahOwner" placeholder="Nome do Owner" />
+  <button (click)="buscaTeamByOwner()">Buscar</button>
+</div>
+
+<div *ngIf="buscarTeam">
+  <h3>{{ buscarTeam.owner }}</h3>
+  <ul>
+    <li *ngFor="let pokemon of buscarTeam.pokemons">
+      {{ pokemon.name }} - ID: {{ pokemon.id }}, Weight: {{ pokemon.weight }}, Height: {{ pokemon.height }}
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h2>Criar times Pokemos</h2>
+  <form (ngSubmit)="criarTime()" #teamForm="ngForm">
+    <input type="text" [(ngModel)]="novoTimeOwner"
+           name="owner"
+           placeholder="Owner Name"
+           required
+           #owner="ngModel"
+    >
+    <div *ngIf="owner.touched && owner.invalid">O nome do owner é obrigatório.</div>
+
+    <div *ngFor="let pokemon of pokemons; let i = index">
+      <input type="text" [(ngModel)]="pokemons[i]"
+             name="pokemon{{i}}"
+             placeholder="Pokémon Name"
+             required
+             #pokemonInput="ngModel"
+      >
+      <div *ngIf="pokemonInput.touched && pokemonInput.invalid">O nome do Pokémon é obrigatório.</div>
+
+      <button type="button" (click)="removePokemonCampo(i)">-</button>
+      <button type="button" (click)="adicionarPokemonCampo()" [disabled]="pokemons.length >= 6">+</button>
+    </div>
+    <button type="submit" [disabled]="!teamForm.form.valid" class="pokemon-button">Criar Times</button>
+
+  </form>
+</div>
 
 <div *ngFor="let time of teams">
   <h2>{{ time.owner }}</h2>
   <ul>
     <li *ngFor="let pokemon of time.pokemons">
-      {{ pokemon.name }} - ID: {{ pokemon.id }}, Altura: {{ pokemon.height }}, Peso: {{ pokemon.weight }}
+      ID: {{ pokemon.id }} - {{ pokemon.name }}, Altura: {{ pokemon.height }}, Peso: {{ pokemon.weight }}
 
     </li>
   </ul>
 
 </div>
+</body>
